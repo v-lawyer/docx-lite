@@ -48,7 +48,11 @@ pub mod extractor;
 
 // Re-export main types and functions
 pub use error::{DocxError, Result};
-pub use types::{Document, Paragraph, Run, Table, TableRow, TableCell};
+pub use types::{
+    Document, Paragraph, Run, Table, TableRow, TableCell,
+    ListItem, ListType, HeaderFooter, HeaderFooterType,
+    Note, NoteType, ExtractOptions
+};
 pub use extractor::{
     extract_text,
     extract_text_from_bytes,

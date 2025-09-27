@@ -21,7 +21,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-docx-lite = "0.1.0"
+docx-lite = "0.2.0"
 ```
 
 ## Quick Start
@@ -39,30 +39,36 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ## Advanced Usage
 
 ```rust
-use docx_lite::parse_document_from_path;
+use docx_lite::{parse_document_from_path, ExtractOptions};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let doc = parse_document_from_path("document.docx")?;
 
-    // Access paragraphs
-    for paragraph in &doc.paragraphs {
-        println!("Paragraph: {}", paragraph.to_text());
+    // Extract text with all options enabled
+    let options = ExtractOptions::all();
+    let text = doc.extract_text_with_options(&options);
+    println!("{}", text);
 
-        // Access runs with formatting info
-        for run in &paragraph.runs {
-            if run.bold {
-                println!("  Bold text: {}", run.text);
-            }
-        }
+    // Or customize extraction
+    let custom_options = ExtractOptions {
+        include_headers: true,
+        include_footers: true,
+        include_footnotes: false,
+        include_endnotes: false,
+        include_list_markers: true,
+    };
+    let custom_text = doc.extract_text_with_options(&custom_options);
+
+    // Access specific elements
+    for list_item in &doc.lists {
+        println!("List item (level {}): {}", list_item.level, list_item.text);
     }
 
-    // Access tables
-    for table in &doc.tables {
-        for row in &table.rows {
-            for cell in &row.cells {
-                println!("Cell: {}", cell.paragraphs[0].to_text());
-            }
-        }
+    for footnote in &doc.footnotes {
+        println!("Footnote {}: {}",
+            footnote.id,
+            footnote.paragraphs[0].to_text()
+        );
     }
 
     Ok(())
@@ -87,10 +93,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 - ✅ Paragraphs
 - ✅ Runs (with bold, italic, underline formatting)
 - ✅ Tables (with rows and cells)
-- ✅ Basic text extraction
-- 🚧 Lists (coming soon)
-- 🚧 Headers/Footers (coming soon)
-- 🚧 Footnotes/Endnotes (coming soon)
+- ✅ Lists (bullets and numbering) - **NEW in v0.2.0**
+- ✅ Headers/Footers - **NEW in v0.2.0**
+- ✅ Footnotes/Endnotes - **NEW in v0.2.0**
+- ✅ Advanced text extraction with options
 
 ## Performance
 

@@ -6,6 +6,7 @@ authors = ["V-Lawyer Team"]
 license = "MIT OR Apache-2.0"
 description = "Lightweight, fast DOCX text extraction library with minimal dependencies"
 repository = "https://github.com/v-lawyer/docx-lite"
+homepage = "https://github.com/v-lawyer/docx-lite"
 documentation = "https://docs.rs/docx-lite"
 readme = "README.md"
 keywords = ["docx", "office", "word", "text-extraction", "parser"]

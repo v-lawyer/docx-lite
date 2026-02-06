@@ -64,7 +64,7 @@ impl<R: Read + Seek> DocxParser<R> {
 
     fn parse_document_xml(&self, xml: &str, document: &mut Document) -> Result<()> {
         let mut reader = Reader::from_str(xml);
-        reader.config_mut().trim_text(true);
+        reader.config_mut().trim_text(false);
 
         let mut buf = Vec::new();
         let mut current_paragraph: Option<Paragraph> = None;
@@ -220,7 +220,7 @@ impl<R: Read + Seek> DocxParser<R> {
     fn parse_numbering(&self, xml: &str) -> Result<HashMap<i64, ListType>> {
         let mut numbering_defs = HashMap::new();
         let mut reader = Reader::from_str(xml);
-        reader.config_mut().trim_text(true);
+        reader.config_mut().trim_text(false);
 
         let mut buf = Vec::new();
         let mut current_num_id: Option<i64> = None;
@@ -302,7 +302,7 @@ impl<R: Read + Seek> DocxParser<R> {
 
     fn parse_header_footer_content(&self, xml: &str, header_footer: &mut HeaderFooter) -> Result<()> {
         let mut reader = Reader::from_str(xml);
-        reader.config_mut().trim_text(true);
+        reader.config_mut().trim_text(false);
 
         let mut buf = Vec::new();
         let mut current_paragraph: Option<Paragraph> = None;
@@ -356,7 +356,7 @@ impl<R: Read + Seek> DocxParser<R> {
 
     fn parse_notes(&self, xml: &str, notes: &mut Vec<Note>, note_type: NoteType) -> Result<()> {
         let mut reader = Reader::from_str(xml);
-        reader.config_mut().trim_text(true);
+        reader.config_mut().trim_text(false);
 
         let mut buf = Vec::new();
         let mut current_note: Option<Note> = None;
